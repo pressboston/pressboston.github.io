@@ -91,13 +91,17 @@ var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhA
       $tl.append(html);
     };
 
+    var lastPage = 0;
     var fetchReq = null;
     var fetchPage = function(pagenum) {
       var apiUrl = 'https://api.angel.co/1/funding?callback=?';
 
       if (fetchReq) return;
 
-      $("h1").html("PressBoston <span class='load'>(Loading Data)</span> " + imgloader);
+      var percent = (lastPage === 0 ?
+                     "0%" :
+                     (100.0 * (pagenum - 1) / lastPage).toFixed(0) + "%");
+      $("h1").html("PressBoston <span class='load'>("+percent+" Loaded)</span> " + imgloader);
 
       fetchReq = $.getJSON(apiUrl, {tag_ids: '116110', page: pagenum},
         function(data) {
@@ -107,6 +111,7 @@ var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhA
 
           rounds = rounds.concat(data.funding);
           pagesFetched = data.page;
+          lastPage = data.last_page;
 
           if (data.page === data.last_page) {
             $("h1").html("PressBoston " + doneloader);
