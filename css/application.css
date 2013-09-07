@@ -1,22 +1,39 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
- *= require_self
- */
-
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size:1em;
-  margin:0 0 2em 0;
+  margin:0;
 }
 
 h1 {
   margin-left:20px;
+}
+
+html, body {height: 100%;}
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow:auto;
+  padding-bottom: 2em;
+}  /* must be same height as the footer */
+
+#footer {
+  position: relative;
+  margin-top: -2em; /* negative value of footer height */
+  height: 2em;
+  font-size:12px;
+  clear:both;
+  text-align:center;
+}
+
+#footer a {
+  color:black;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+#footer a:hover, #footer a:active {
+  text-decoration:underline;
 }

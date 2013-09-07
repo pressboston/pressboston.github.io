@@ -71,7 +71,9 @@ var require_templates = function(group, templates, success) {
                 "thumbnail":round.startup.thumb_url
             }
         };
-        tl.timeline.date.push(roundDate);
+        if (round.startup.name && round.startup.name !== "") {
+          tl.timeline.date.push(roundDate);
+        }
       }
 
       return tl;

@@ -2,10 +2,6 @@
  *= require ./timelinecss/timeline.css
  */
 
-#timeline-embed {
-  height:100%;
-}
-
 #timeline-embed .vco-storyjs * {
   font-family:Helvetica, Arial, sans-serif !important;
 }
