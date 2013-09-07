@@ -30,6 +30,9 @@ var require_templates = function(group, templates, success) {
   }
 };
 
+var imgloader =  "<img class='loader' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' />";
+var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' />";
+
 (function($) {
     var rounds = [];
     var pagesFetched = 0;
@@ -94,7 +97,7 @@ var require_templates = function(group, templates, success) {
 
       if (fetchReq) return;
 
-      $("h1").html("PressBoston - Loading...");
+      $("h1").html("PressBoston <span class='load'>(Loading Data)</span> " + imgloader);
 
       fetchReq = $.getJSON(apiUrl, {tag_ids: '116110', page: pagenum},
         function(data) {
@@ -106,7 +109,7 @@ var require_templates = function(group, templates, success) {
           pagesFetched = data.page;
 
           if (data.page === data.last_page) {
-            $("h1").html("PressBoston");
+            $("h1").html("PressBoston " + doneloader);
 
             $('#timeline-embed').empty();
             createStoryJS({
@@ -128,7 +131,7 @@ var require_templates = function(group, templates, success) {
 
     $(document).ready(function(e) {
         $tl = $('ul#tl');
-        $("h1").html("PressBoston - Loading Templates...");
+        $("h1").html("PressBoston <span class='load'>(Loading Templates)</span> " + imgloader);
         require_templates('timeline', ['headline', 'round'], function() {
           fetchPage(1);
         });

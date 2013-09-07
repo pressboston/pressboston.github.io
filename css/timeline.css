@@ -2,6 +2,34 @@
  *= require ./timelinecss/timeline.css
  */
 
+img.loader {
+  display:inline-block;
+  height:64px;
+  width:64px;
+  background-image:url('/img/loader_64.gif');
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain;
+  border:none;
+  vertical-align:middle;
+}
+
+img.loader.done {
+  background:transparent;
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  img.loader {
+    background-image:url('/img/loader_128.gif');
+  }
+}
+
+span.load {
+  font-weight:normal;
+}
+
 #timeline-embed .vco-storyjs * {
   font-family:Helvetica, Arial, sans-serif !important;
 }
