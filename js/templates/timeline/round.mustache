@@ -1,0 +1,13 @@
+Amount: {{amount_formatted}}
+
+{{#has_participants}}
+  <ul class="participants">
+{{/has_participants}}
+{{#participants}}
+  <li class="participant">{{name}}</li>
+{{/participants}}
+{{#has_participants}}
+  </ul>
+{{/has_participants}}
+<br /><br />
+<p>{{#startup}}{{product_desc}}{{/startup}}</p>
