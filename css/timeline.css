@@ -68,3 +68,14 @@ li.participant:after {
 li.participant:last-child:after {
   content: "";
 }
+
+/*
+Some small style tweaks
+*/
+.media .media-wrapper .media-container .credit {
+  padding: 10px 20px 0;
+}
+.media .media-wrapper .media-container .caption {
+  padding: 0px 20px;
+}
+
