@@ -1,0 +1,19 @@
+{
+  "title": "Press Boston",
+  "name": "press-boston",
+  "version": "0.0.1",
+  "homepage": "http://pressboston.com",
+  "author": {
+    "name": "Press Boston"
+  },
+  "licenses": [
+    {
+      "type": "none"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-contrib-jshint": "~0.6.4"
+  }
+}
