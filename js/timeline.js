@@ -33,6 +33,15 @@ var require_templates = function(group, templates, success) {
 var imgloader =  "<img class='loader' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' />";
 var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7' />";
 
+// Hack the Timeline into this global var >_<
+var Timeline = null;
+
+$.embedly.defaults.key = '222d9be7d2dc4921b4decf3cc74ed2dd';
+$.embedly.defaults.batch = 10;
+$.embedly.defaults.query = {
+  words: 35
+};
+
 (function($) {
     var rounds = [];
     var pagesFetched = 0;
@@ -61,8 +70,6 @@ var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhA
         var startDate = round.closed_at;
         var matches = startDate.match(/(\d\d\d\d)-(\d\d)-(\d\d)/);
         startDate = matches[2] + "/" + matches[3] + "/" + matches[1] + " 0:00:00";
-        console.log(startDate);
-        console.log(round);
         var roundDate = {
             "startDate":startDate,
             "headline": Templates.headline(round),
@@ -71,7 +78,8 @@ var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhA
                 "media":(round.source_url ?
                          round.source_url :
                          round.startup.logo_url),
-                "thumbnail":round.startup.thumb_url
+                "thumbnail":round.startup.thumb_url,
+                "type": "twitter"
             }
         };
         if (round.startup.name && round.startup.name !== "") {
@@ -115,17 +123,23 @@ var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhA
 
           if (data.page === data.last_page) {
             $("h1").html("PressBoston " + doneloader);
+            var otherStuffHeight = $("h1").outerHeight(true) + $('#footer').outerHeight(true) + 40;
 
             $('#timeline-embed').empty();
-            createStoryJS({
+            var storyJs = createStoryJS({
                 type:       'timeline',
                 width:      '100%',
-                height:     '600',
+                height:     '100%',
                 source:     tlData(),
                 embed_id:   'timeline-embed',
                 start_at_end:       true,
                 start_zoom_adjust:  3,
                 font:               'Helvetica'
+            });
+            var $container = $('#timeline_ctr');
+            $container.height($window.height() - otherStuffHeight);
+            $window.resize(function(e) {
+                $container.height($window.height() - otherStuffHeight);
             });
           } else {
             fetchPage(pagesFetched + 1);
@@ -137,7 +151,7 @@ var doneloader =  "<img class='loader done' src='data:image/gif;base64,R0lGODlhA
     $(document).ready(function(e) {
         $tl = $('ul#tl');
         $("h1").html("PressBoston <span class='load'>(Loading Templates)</span> " + imgloader);
-        require_templates('timeline', ['headline', 'round'], function() {
+        require_templates('timeline', ['headline', 'round', 'embedly'], function() {
           fetchPage(1);
         });
     });

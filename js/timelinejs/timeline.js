@@ -4321,7 +4321,25 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				return _size;
 			},
 
-			create: function(m) {
+      create: function(m) {
+        var url = m.id;
+        $.embedly.oembed(url).progress(function(data) {
+            if (!data.description || data.description == "") {
+              VMM.ExternalAPI.webthumb.pp_fallback(m);
+              return;
+            }
+
+            console.log(data);
+            VMM.ExternalAPI.webthumb.embedly(m, data);
+          });
+      },
+
+      embedly: function(m, data) {
+				trace("EMBEDLY THUMB CREATE");
+        VMM.attachElement("#" + m.uid, Templates.embedly(data));
+      },
+
+			pp_fallback: function(m) {
 				trace("WEB THUMB CREATE");
 
 				var thumb_url	= "http://free.pagepeeker.com/v2/thumbs.php?";
@@ -4562,7 +4580,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// WEBSITE
 				} else if (m.type		==	"website") {
 
-					mediaElem			=	"<div class='media-shadow website' id='" + m.uid + "'>" + loading_messege + "</div>";
+					mediaElem			=	"<div class='website' id='" + m.uid + "'>" + loading_messege + "</div>";
 					VMM.ExternalAPI.webthumb.get(m);
 					//mediaElem			=	"<div class='media-shadow website'><a href='" + m.id + "' target='_blank'>" + "<img src='http://api1.thumbalizr.com/?url=" + m.id.replace(/[\./]$/g, "") + "&width=300' class='media-image'></a></div>";
 
@@ -9164,7 +9182,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 
 		/* CREATE TIMELINE STRUCTURE
 		================================================== */
-		function createStructure() {
+		function createStructure(this_timeline) {
 			// CREATE DOM STRUCTURE
 			$timeline	= VMM.getElement(timeline_id);
 			VMM.Lib.addClass($timeline, "vco-timeline");
@@ -9182,7 +9200,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 
 			slider		= new VMM.Slider($slider, config);
+      this_timeline.slider = slider;
+
 			timenav		= new VMM.Timeline.TimeNav($navigation);
+      this_timeline.timenav = timenav;
 
 			if (!has_width) {
 				config.width = VMM.Lib.width($timeline);
@@ -9346,7 +9367,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			trace('INIT');
 			setViewport();
 			createConfig(c);
-			createStructure();
+			createStructure(this);
+      this.reSize = reSize;
+      this.updateConfig = function(newcfg) {
+        config = $.extend(config, newcfg);
+        return config;
+      };
 
 			if (type.of(_data) == "string") {
 				config.source	= _data;

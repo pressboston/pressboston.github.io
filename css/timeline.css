@@ -68,3 +68,29 @@ li.participant:after {
 li.participant:last-child:after {
   content: "";
 }
+
+.embedly {
+  text-align: left;
+  overflow:scroll;
+}
+
+.embedly img.thumb {
+  float: right;
+  margin-left:10px;
+}
+
+.layout-text-media .text {
+  border-left:25px solid white;
+}
+
+.layout-text-media .text .container {
+  background-color:#eee;
+  padding: 10px !important;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px #999;
+}
+
+.vco-slider .slider-item .content .content-container .text .container h2.date {
+  font-size:10px;
+}
+
