@@ -1,0 +1,18 @@
+<div class="embedly">
+  {{#thumbnail_url}}
+    <a href="{{url}}" target="_blank"><img src="{{thumbnail_url}}" class="thumb" style="" /></a>
+  {{/thumbnail_url}}
+  <h2><a href="{{url}}" target="_blank">{{title}}</a></h2>
+  {{#author_name}}
+    <h4>by <a href="{{author_url}}" target="_blank">{{author_name}}</a></h4>
+  {{/author_name}}
+  <p>
+  {{description}}
+  </p>
+  {{#provider_name}}
+    <p>
+      via <a href="{{provider_url}}" target="_blank">{{provider_name}}</a>
+    </p>
+  {{/provider_name}}
+  <div class="clearfix"></div>
+</div>
