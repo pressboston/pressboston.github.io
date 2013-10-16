@@ -1,3 +1,7 @@
+body {
+  color: #333;
+}
+
 #list {
   display:inline-block;
   width: 50%;
@@ -10,10 +14,14 @@
   padding:0;
 }
 
+#list ul li {
+  border-top: 1px #e2e2e2 solid;
+}
+
 #list ul li a {
   display:block;
-  padding:0.5em 20px;
-  color: black;
+  padding: 0.8em 20px;
+  color: #555;
   background-color: transparent;
   text-decoration: none;
   transition: all 0.25s ease-in-out;
@@ -21,10 +29,12 @@
 }
 
 #list ul li a:hover {
-  text-decoration:underline;
+  color: #2BB2DC;
+  background-color: #eee;
 }
 
 #list ul li a.current {
+  color: #333;
   background-color: #eee;
 }
 
@@ -68,12 +78,22 @@
 }
 
 #detail_container ul.rounds li {
-  margin:0.5em 0;
+  margin:0.8em 0;
 }
 
 #detail_container ul.rounds li img {
   height:50px;
   width:50px;
+  margin-right: 10px;
   border-radius:4px;
   vertical-align:middle;
+}
+
+#detail a {
+  font-weight: bold;
+}
+
+#detail a:hover {
+  color: #2BB2DC;
+}
 }
