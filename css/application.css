@@ -42,15 +42,23 @@ html, body {height: 100%;}
 a {
   color:#333;
   text-decoration:none;
-  color: #2BB2DC;
 }
 
 .menu-btn {
+  color: #2BB2DC;
   font-weight: 300;
   margin-right: 10px;
 }
 
-a:hover, #footer a:active {
+.menu-btn:hover {
+  text-decoration: underline;
+}
+
+#footer a {
+  color: #2BB2DC;
+}
+
+.menu-btn:hover, #footer a:hover, #footer a:active {
   text-decoration:underline;
 }
 

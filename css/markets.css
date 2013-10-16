@@ -1,3 +1,7 @@
+body {
+  color: #333;
+}
+
 #list {
   display:inline-block;
   width: 50%;
@@ -74,12 +78,22 @@
 }
 
 #detail_container ul.rounds li {
-  margin:0.5em 0;
+  margin:0.8em 0;
 }
 
 #detail_container ul.rounds li img {
   height:50px;
   width:50px;
+  margin-right: 10px;
   border-radius:4px;
   vertical-align:middle;
+}
+
+#detail a {
+  font-weight: bold;
+}
+
+#detail a:hover {
+  color: #2BB2DC;
+}
 }
