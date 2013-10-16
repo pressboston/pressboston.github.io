@@ -1,11 +1,14 @@
 body {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size:1em;
   margin:0;
+  color: #333;
+  background-color: #f5f5f5;
 }
 
 h1 {
-  margin:10px 20px 10px 20px;
+  font-size: 40px;
+  margin:10px 20px 30px 20px;
   padding:0;
 }
 
@@ -37,10 +40,14 @@ html, body {height: 100%;}
 }
 
 a {
-  color:black;
+  color:#333;
   text-decoration:none;
-  font-weight:bold;
-  color: #000099;
+  color: #2BB2DC;
+}
+
+.menu-btn {
+  font-weight: 300;
+  margin-right: 10px;
 }
 
 a:hover, #footer a:active {
@@ -81,7 +88,12 @@ img.loader.done {
 }
 
 #menu .current.page {
-  background-color: #000099;
+  background-color: #2BB2DC;
   color: #fff;
-  padding: 3px;
+  font-weight: 300;
+  padding: 10px 16px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin-right: 10px;
 }

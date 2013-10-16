@@ -10,10 +10,14 @@
   padding:0;
 }
 
+#list ul li {
+  border-top: 1px #e2e2e2 solid;
+}
+
 #list ul li a {
   display:block;
-  padding:0.5em 20px;
-  color: black;
+  padding: 0.8em 20px;
+  color: #555;
   background-color: transparent;
   text-decoration: none;
   transition: all 0.25s ease-in-out;
@@ -21,10 +25,12 @@
 }
 
 #list ul li a:hover {
-  text-decoration:underline;
+  color: #333;
+  background-color: #eee;
 }
 
 #list ul li a.current {
+  color: #333;
   background-color: #eee;
 }
 
