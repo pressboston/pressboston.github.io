@@ -1,19 +1,20 @@
 ---
 layout: default
-title: Markets
+title: Timeline
 
 pagecss:
-  <link rel="stylesheet" type="text/css" href="css/markets.css" />
+  <link rel="stylesheet" type="text/css" href="css/timeline.css" />
 
 pagejs:
-  <script type="text/javascript" src="js/markets.js"></script>
+  <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/timelinejs/timeline.js"></script>
+  <script type="text/javascript" src="js/timelinejs/storyjs-embed.js"></script>
+  <script type="text/javascript" src="js/timeline.js"></script>
 
 ---
 
-<div id="markets">
-  <div id="list"></div>
-  <div id="detail">
-    <div id="detail_container"></div>
-  </div>
-  <div class="clearfix"></div>
+<div id="timeline_ctr">
+  <div id="timeline-embed"></div>
 </div>
+<ul id="tl"></ul>
+<div id="loader"></div>

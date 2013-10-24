@@ -24,14 +24,14 @@ html, body {height: 100%;}
 
 #main {
   overflow:auto;
-  padding-bottom: 3em;
+  padding-bottom: 36px;
 }  /* must be same height as the footer */
 
 #footer {
   position: relative;
-  margin-top: -3em; /* negative value of footer height */
-  padding: 1em 0 1em 0;
-  height: 1em;
+  margin-top: -36px; /* negative value of footer height */
+  padding: 12px 0 12px 0;
+  height: 12px;
   font-size:12px;
   clear:both;
   text-align:center;

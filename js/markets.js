@@ -1,12 +1,17 @@
 (function($) {
   var storage = {};
+  var siteStorage = {};
   DataStore.prime(storage, 'markets', {
-    rounds: {},
-    startups: {},
-    startupRounds: {},
     markets: {},
     marketRounds: {},
     marketList: []
+  });
+
+  DataStore.prime(siteStorage, 'site', {
+    startups: {},
+    startupRounds: {},
+    rounds: {},
+    roundList: []
   });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -14,14 +19,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 
   var amountRaisedForStartup = function(id) {
-    return _.reduce(storage.startups[id].rounds, function(memo, roundId) {
-      var round = storage.rounds[roundId];
+    return _.reduce(siteStorage.startups[id].rounds, function(memo, roundId) {
+      var round = siteStorage.rounds[roundId];
       return round.round_type === "Acquired" ? 0 : memo + round.amount;
     }, 0);
   };
 
   var fetchRounds = function() {
-    if (Object.keys(storage.rounds).length) {
+    if (siteStorage.roundList.length) {
       fetchStartups();
       return;
     }
@@ -33,39 +38,40 @@
       function(loaded) {
         for (var i = 0; i < loaded.length; i++) {
           var round = loaded[i];
-          storage.rounds[round.id] = round;
+          siteStorage.rounds[round.id] = round;
+          siteStorage.roundList.push(round.id);
 
-          var savedStartup = storage.startups[round.startup.id];
+          var savedStartup = siteStorage.startups[round.startup.id];
           if (savedStartup) {
-            storage.startupRounds[savedStartup.id].push(round.id);
+            siteStorage.startupRounds[savedStartup.id].push(round.id);
           } else {
             var startup = round.startup;
-            storage.startupRounds[startup.id] = [round.id];
-            storage.startups[startup.id] = startup;
+            siteStorage.startupRounds[startup.id] = [round.id];
+            siteStorage.startups[startup.id] = startup;
           }
         }
 
-        DataStore.sync(storage, 'markets');
+        DataStore.sync(siteStorage, 'site');
 
         fetchStartups();
       });
   };
 
   var fetchStartups = function() {
-    var startupIds = Object.keys(storage.startups);
+    var startupIds = Object.keys(siteStorage.startups);
     if (startupIds.length &&
-        storage.startups[startupIds[0]].markets) {
+        siteStorage.startups[startupIds[0]].markets) {
       prepareMarkets();
       return;
     }
 
     Angellist.startupBatch(
-      Object.keys(storage.startups),
+      Object.keys(siteStorage.startups),
       function(percent) {
         Loader.show("Loading dataset 2 of 2 - " + percent);
       },
       function(loaded) {
-        $.extend(storage.startups, loaded);
+        $.extend(siteStorage.startups, loaded);
         DataStore.sync(storage, 'markets');
         prepareMarkets();
       });
@@ -79,7 +85,7 @@
     }
 
     var marketList = [];
-    _(storage.startups).each(function(startup, id) {
+    _(siteStorage.startups).each(function(startup, id) {
       if (startup.markets) {
         for (var i = 0; i < startup.markets.length; i++) {
           var market = startup.markets[i];
@@ -87,10 +93,10 @@
           var amountRaised = 0;
           var newMarketRoundIds = [];
 
-          var startupRounds = storage.startupRounds[id];
+          var startupRounds = siteStorage.startupRounds[id];
           for (var j = 0; j < startupRounds.length; j++) {
             var roundId = startupRounds[j];
-            var round = storage.rounds[roundId];
+            var round = siteStorage.rounds[roundId];
             if (round.round_type === "Acquired") return;
 
             amountRaised += round.amount;
@@ -154,7 +160,7 @@
     var market = storage.markets[marketId];
     market.rounds =
       _(storage.marketRounds[marketId]).chain().map(function(rid) {
-        var round = storage.rounds[rid];
+        var round = siteStorage.rounds[rid];
         round.amount_formatted = (round.amount > 0 ?
                                  "$" + CurrencyTools.wordize(round.amount) :
                                  "Undisclosed");

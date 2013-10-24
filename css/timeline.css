@@ -49,10 +49,11 @@ li.participant:last-child:after {
 .embedly img.thumb {
   float: right;
   margin-left:10px;
+  max-width:50%;
 }
 
 .layout-text-media .text {
-  border-left:25px solid white;
+  border-left:25px solid transparent;
 }
 
 .layout-text-media .text .container {
@@ -66,3 +67,14 @@ li.participant:last-child:after {
   font-size:10px;
 }
 
+#storyjs-timeline {
+  background-color: transparent;
+}
+
+.storyjs-embed {
+  background-color: transparent;
+}
+
+.vco-timeline .vco-navigation .timenav-background .timenav-interval-background {
+  background-color: transparent;
+}

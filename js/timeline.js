@@ -15,8 +15,13 @@ $.embedly.defaults.query = {
     var $loader = null;
     var $scroller = null;
 
-    var storage = {};
-    DataStore.prime(storage, 'timeline', {rounds: []});
+    var siteStorage = {};
+    DataStore.prime(siteStorage, 'site', {
+        startups: {},
+        startupRounds: {},
+        rounds: {},
+        roundList: []
+    });
 
     var tlData = function() {
       var tl = {
@@ -28,8 +33,8 @@ $.embedly.defaults.query = {
         }
       };
 
-      for (var i = 0; i < storage.rounds.length; i++) {
-        var round = storage.rounds[i];
+      for (var i = 0; i < siteStorage.roundList.length; i++) {
+        var round = siteStorage.rounds[siteStorage.roundList[i]];
         round.amount_formatted = (round.amount > 0 ?
                                   "$" + CurrencyTools.wordize(round.amount) :
                                   "Undisclosed");
@@ -67,7 +72,7 @@ $.embedly.defaults.query = {
     };
 
     var fetchRounds = function() {
-      if (storage.rounds.length > 0) {
+      if (siteStorage.roundList.length > 0) {
         startTimeline();
         return;
       }
@@ -76,16 +81,29 @@ $.embedly.defaults.query = {
           Loader.show(percent + " Loaded");
         },
         function (loaded) {
-          storage.rounds = loaded;
-          Loader.hide();
-          DataStore.sync(storage, 'timeline');
+          for (var i = 0; i < loaded.length; i++) {
+            var round = loaded[i];
+            siteStorage.rounds[round.id] = round;
+            siteStorage.roundList.push(round.id);
+
+            var savedStartup = siteStorage.startups[round.startup.id];
+            if (savedStartup) {
+              siteStorage.startupRounds[savedStartup.id].push(round.id);
+            } else {
+              var startup = round.startup;
+              siteStorage.startupRounds[startup.id] = [round.id];
+              siteStorage.startups[startup.id] = startup;
+            }
+          }
+
+          DataStore.sync(siteStorage, 'site');
 
           startTimeline();
         });
     };
 
     var startTimeline = function() {
-      var otherStuffHeight = $("#nav_zone").outerHeight(true) + $('#footer').outerHeight(true) + 40;
+      var otherStuffHeight = $("#nav_zone").outerHeight(true) + $('#footer').outerHeight(true) + 90;
 
       $('#timeline-embed').empty();
       var storyJs = createStoryJS({
