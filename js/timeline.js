@@ -98,6 +98,7 @@ $.embedly.defaults.query = {
 
           DataStore.sync(siteStorage, 'site');
 
+          Loader.hide();
           startTimeline();
         });
     };
